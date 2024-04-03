@@ -1,9 +1,9 @@
-package com.example.pt2024_30423_coman_alecsia_assignment_2;
+package com.example.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class Controller {
     @FXML
     private Label welcomeText;
 

@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.pt2024_30423_coman_alecsia_assignment_2/com.example.pt2024_30423_coman_alecsia_assignment_2.HelloApplication
+                                com.example.pt2024_30423_coman_alecsia_assignment_2/com.example.Controller.Application
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

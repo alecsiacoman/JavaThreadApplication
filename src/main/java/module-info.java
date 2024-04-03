@@ -3,6 +3,6 @@ module com.example.pt2024_30423_coman_alecsia_assignment_2 {
     requires javafx.fxml;
 
 
-    opens com.example.pt2024_30423_coman_alecsia_assignment_2 to javafx.fxml;
-    exports com.example.pt2024_30423_coman_alecsia_assignment_2;
+    opens com.example.Controller to javafx.fxml;
+    exports com.example.Controller;
 }
