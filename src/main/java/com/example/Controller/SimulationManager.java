@@ -22,7 +22,7 @@ public class SimulationManager implements Runnable{
     private SimulationFrame frame;
     private List<Task> tasks;
 
-    public SimulationManager(int timeLimit, int maxArrivalTime, int minArrivalTime, int maxServiceTime, int minServiceTime int numberOfServers, int numberOfClients, SimulationFrame frame){
+    public SimulationManager(int timeLimit, int maxArrivalTime, int minArrivalTime, int maxServiceTime, int minServiceTime, int numberOfServers, int numberOfClients, SimulationFrame frame){
         this.timeLimit = timeLimit;
         this.minArrivalTime = minArrivalTime;
         this.maxServiceTime = maxServiceTime;

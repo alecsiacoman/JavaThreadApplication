@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="381660ef-d7d0-40d5-be88-a2344ab5deab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/SimulationFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/SimulationFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Controller/SimulationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Controller/SimulationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/Controller/simulation-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/Controller/simulation-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712128959378</updated>
       <workItem from="1712128960481" duration="500000" />
-      <workItem from="1712315440967" duration="9367000" />
+      <workItem from="1712315440967" duration="10012000" />
     </task>
     <servers />
   </component>
