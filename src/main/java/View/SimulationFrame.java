@@ -2,38 +2,92 @@ package View;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class SimulationFrame {
 
+    public void setLblValidateData(String str){
+        lblValidateData.setText(str);
+    }
+
     public Integer getNumberOfClients(){
-        return Integer.parseInt(txtNrClients.getText());
+        if (txtNrClients.getText().isEmpty()){
+            return 0;
+        }
+        try{
+            return Integer.parseInt(txtNrClients.getText());
+        }catch (NumberFormatException e){
+            return 0;
+        }
     }
 
     public Integer getActiveQueues(){
-        return Integer.parseInt(txtNrQueues.getText());
+        if (txtNrQueues.getText().isEmpty()){
+            return 0;
+        }
+        try{
+            return Integer.parseInt(txtNrQueues.getText());
+        }catch (NumberFormatException e){
+            return 0;
+        }
     }
 
     public Integer getSimulationInterval(){
-        return Integer.parseInt(txtSimulationInterval.getText());
-    }
+        if (txtSimulationInterval.getText().isEmpty())
+            return 0;
+
+        try{
+            return Integer.parseInt(txtSimulationInterval.getText());
+        }catch (NumberFormatException e) {
+            return 0;
+        }
+   }
 
     public Integer getMinimumArrivalTime(){
-        return Integer.parseInt(txtMinArrival.getText());
+        if (txtMinArrival.getText().isEmpty()){
+            return 0;
+        }
+        try{
+            return Integer.parseInt(txtMinArrival.getText());
+        }catch (NumberFormatException e){
+            return 0;
+        }
     }
 
     public Integer getMaximumArrivalTime(){
-        return Integer.parseInt(txtMaxArrival.getText());
+        if (txtMaxArrival.getText().isEmpty()){
+            return 0;
+        }
+        try{
+            return Integer.parseInt(txtMaxArrival.getText());
+        }catch (NumberFormatException e){
+            return 0;
+        }
     }
 
     public Integer getMinimumServiceTime(){
-        return Integer.parseInt(txtMinService.getText());
+        if (txtMinService.getText().isEmpty()){
+            return 0;
+        }
+        try{
+            return Integer.parseInt(txtMinService.getText());
+        }catch (NumberFormatException e){
+            return 0;
+        }
     }
 
     public Integer getMaximumServiceTime(){
-        return Integer.parseInt(txtMaxService.getText());
+        if (txtMaxService.getText().isEmpty()){
+            return 0;
+        }
+        try{
+            return Integer.parseInt(txtMaxService.getText());
+        }catch (NumberFormatException e){
+            return 0;
+        }
     }
 
     public Button getBtnStartSimulation() {
@@ -58,6 +112,8 @@ public class SimulationFrame {
     private TextField txtMinService;
     @FXML
     private TextField txtMaxService;
+    @FXML
+    private Label lblValidateData;
     @FXML
     private Button btnValidateData;
     @FXML

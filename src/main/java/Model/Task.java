@@ -22,4 +22,9 @@ public class Task {
     public int getServiceTime() {
         return serviceTime;
     }
+
+    @Override
+    public String toString(){
+        return "(" + ID + " " + arrivalTime + " " + serviceTime + "); ";
+    }
 }

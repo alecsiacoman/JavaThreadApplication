@@ -29,8 +29,6 @@ public class Server implements Runnable {
     }
 
     public void addTask(Task task){
-        //add task to queue
-        //increment the waiting Period
         tasks.offer(task);
         waitingPeriod.incrementAndGet();
     }
@@ -41,5 +39,9 @@ public class Server implements Runnable {
 
     public AtomicInteger getWaitingPeriod() {
         return waitingPeriod;
+    }
+
+    public int getQueueSize(){
+        return tasks.size();
     }
 }

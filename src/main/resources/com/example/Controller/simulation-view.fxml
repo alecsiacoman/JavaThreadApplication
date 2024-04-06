@@ -21,7 +21,7 @@
                         <Insets top="10.0" />
                     </VBox.margin>
                 </Label>
-                <HBox prefHeight="429.0" prefWidth="1197.0">
+                <HBox prefHeight="474.0" prefWidth="881.0">
                     <VBox.margin>
                         <Insets left="10.0" right="10.0" top="20.0" />
                     </VBox.margin>
@@ -243,7 +243,10 @@
                         </VBox>
                     </children>
                 </HBox>
-                <Label text="TEXT DESPRE VALIDATE DATA SI DESPRE SIMUALTION!!!" />
+                <Label fx:id="lblValidateData">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Label>
             </children>
         </VBox>
     </children>
