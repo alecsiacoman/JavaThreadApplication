@@ -11,9 +11,7 @@ import javafx.scene.control.Label;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class SimulationManager implements Runnable{
     public int timeLimit;
@@ -45,6 +43,7 @@ public class SimulationManager implements Runnable{
         this.servers = new Server[numberOfServers];
         for(int i = 0; i < numberOfServers; i++)
             servers[i] = new Server();
+        generateRandomTasks();
     }
 
     public void generateRandomTasks(){
@@ -54,6 +53,7 @@ public class SimulationManager implements Runnable{
             int serviceTime = random.nextInt(maxServiceTime - minServiceTime + 1) + minServiceTime;
             tasks.add(new Task(i + 1, arrivalTime, serviceTime));
         }
+        Collections.sort(tasks, Comparator.comparing(Task::getArrivalTime));
     }
 
     @Override
@@ -61,11 +61,14 @@ public class SimulationManager implements Runnable{
         int currentTime = 0;
         try(FileWriter writer = new FileWriter("logs.txt")){
             while(currentTime < timeLimit){
-                generateRandomTasks();
-                for(Task task: tasks){
-                    scheduler.dispatchTask(task);
+                Iterator<Task> iterator = tasks.iterator();
+                while (iterator.hasNext()){
+                    Task task = iterator.next();
+                    if (task.getArrivalTime() == currentTime){
+                        scheduler.dispatchTask(task);
+                        iterator.remove();
+                    }
                 }
-                tasks.clear();
                 String entry = generateLog(currentTime);
                 writer.write(entry + "\n");
                 System.out.println(entry);
@@ -83,15 +86,16 @@ public class SimulationManager implements Runnable{
 
     private String generateLog(int currentTime) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Time ").append(currentTime).append("\n");
+        sb.append("\nTime ").append(currentTime).append("\n");
         sb.append("Waiting clients: ");
         for(Task task : tasks){
             sb.append(task.toString());
         }
-        for(int i = 0; i < numberOfServers; i++){
+        int i = 0;
+        for(Server item : scheduler.getServers()){
             sb.append("\nQueue ").append(i + 1).append(": ");
-            if(servers[i].getQueueSize() != 0){
-                Task[] tasksArray = servers[i].getTasks();
+            if(item.getQueueSize() != 0){
+                Task[] tasksArray = item.getTasks();
                 for (Task task : tasksArray) {
                     sb.append(task.toString());
                 }
