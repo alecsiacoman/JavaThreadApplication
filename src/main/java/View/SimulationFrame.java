@@ -36,6 +36,14 @@ public class SimulationFrame {
         return Integer.parseInt(txtMaxService.getText());
     }
 
+    public Button getBtnStartSimulation() {
+        return btnStartSimulation;
+    }
+
+    public Button getBtnValidateData() {
+        return btnValidateData;
+    }
+
     @FXML
     private TextField txtNrClients;
     @FXML
