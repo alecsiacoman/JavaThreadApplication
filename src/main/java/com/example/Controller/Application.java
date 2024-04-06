@@ -1,5 +1,6 @@
 package com.example.Controller;
 
+import View.SimulationFrame;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -14,6 +15,17 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+
+        SimulationFrame frame = fxmlLoader.getController();
+        SimulationManager manager = new SimulationManager(frame.getSimulationInterval(),
+                                    frame.getMaximumArrivalTime(),
+                                    frame.getMinimumArrivalTime(),
+                                    frame.getMaximumServiceTime(),
+                                    frame.getMinimumServiceTime(),
+                                    frame.getActiveQueues(),
+                                    frame.getNumberOfClients(), frame);
+        Thread simulationThread = new Thread(manager);
+        simulationThread.start();
     }
 
     public static void main(String[] args) {
