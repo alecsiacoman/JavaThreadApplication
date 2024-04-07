@@ -6,18 +6,21 @@ public class ConcreteStrategyTime implements Strategy{
 
     @Override
     public void addTask(List<Server> servers, Task task, int maxTasks) {
-        Server server = servers.get(0);
-        int shortest = server.getWaitingPeriod().get();
+       synchronized (servers){
+           Server server = servers.get(0);
+           int shortest = server.getWaitingPeriod().get();
 
-        for(Server item: servers){
-            int time = item.getWaitingPeriod().get();
-            if(time < shortest && server.getTasks().length < maxTasks){
-                server = item;
-                shortest = time;
-            }
-        }
-
-        //add task to the server with the shortest processing time
-        server.addTask(task);
+           for(Server item: servers){
+               int time = item.getWaitingPeriod().get();
+               if(time < shortest && server.getTasks().length < maxTasks){
+                   server = item;
+                   shortest = time;
+               }
+           }
+           synchronized (server){
+               //add task to the server with the shortest processing time
+               server.addTask(task);
+           }
+       }
     }
 }
