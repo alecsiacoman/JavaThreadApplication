@@ -7,15 +7,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Scheduler {
     private List<Server> servers;
-    private int maxNoServer;
     private int maxTasksPerServer;
     private Strategy strategy;
 
     public Scheduler(int maxNoServer, int maxTasksPerServer){
-        this.maxNoServer = maxNoServer;
         this.maxTasksPerServer = maxTasksPerServer;
         servers = new CopyOnWriteArrayList<>();
-
         for(int i = 0; i < maxNoServer; i++){
             Server server = new Server();
             Thread thread = new Thread(server);
@@ -32,7 +29,7 @@ public class Scheduler {
     }
 
     public synchronized void dispatchTask(Task task){
-        strategy.addTask(servers, task);
+        strategy.addTask(servers, task, maxTasksPerServer);
     }
 
     public List<Server> getServers() {

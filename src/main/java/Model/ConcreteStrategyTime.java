@@ -5,13 +5,13 @@ import java.util.List;
 public class ConcreteStrategyTime implements Strategy{
 
     @Override
-    public void addTask(List<Server> servers, Task task) {
+    public void addTask(List<Server> servers, Task task, int maxTasks) {
         Server server = servers.get(0);
         int shortest = server.getWaitingPeriod().get();
 
         for(Server item: servers){
             int time = item.getWaitingPeriod().get();
-            if(time < shortest){
+            if(time < shortest && server.getTasks().length < maxTasks){
                 server = item;
                 shortest = time;
             }
