@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="901.0" style="-fx-background-color: def4c6;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="990.0" style="-fx-background-color: def4c6;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox alignment="TOP_CENTER" prefHeight="510.0" prefWidth="901.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="TOP_CENTER" prefHeight="510.0" prefWidth="993.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label text="QUEUE MANAGEMENT" textAlignment="CENTER">
                     <font>
@@ -21,7 +21,7 @@
                         <Insets top="10.0" />
                     </VBox.margin>
                 </Label>
-                <HBox prefHeight="469.0" prefWidth="881.0">
+                <HBox prefHeight="412.0" prefWidth="965.0">
                     <VBox.margin>
                         <Insets left="10.0" right="10.0" top="20.0" />
                     </VBox.margin>
@@ -187,7 +187,10 @@
                                         <Insets left="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue1" alignment="CENTER" prefHeight="406.0" prefWidth="78.0" />
+                                <VBox fx:id="vBoxQueue1" alignment="TOP_CENTER" prefHeight="406.0" prefWidth="78.0">
+                           <padding>
+                              <Insets bottom="30.0" top="25.0" />
+                           </padding></VBox>
                             </children></VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
                             <children>
@@ -199,7 +202,10 @@
                                         <Insets left="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue2" alignment="CENTER" prefHeight="407.0" prefWidth="78.0" />
+                                <VBox fx:id="vBoxQueue2" alignment="TOP_CENTER" prefHeight="407.0" prefWidth="78.0">
+                           <padding>
+                              <Insets bottom="30.0" top="25.0" />
+                           </padding></VBox>
                             </children>
                         </VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
@@ -212,7 +218,10 @@
                                         <Insets left="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue3" alignment="CENTER" prefHeight="407.0" prefWidth="78.0" />
+                                <VBox fx:id="vBoxQueue3" alignment="TOP_CENTER" prefHeight="407.0" prefWidth="78.0">
+                           <padding>
+                              <Insets bottom="30.0" top="25.0" />
+                           </padding></VBox>
                             </children>
                         </VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
@@ -225,7 +234,10 @@
                                         <Insets left="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue4" alignment="CENTER" prefHeight="409.0" prefWidth="78.0" />
+                                <VBox fx:id="vBoxQueue4" alignment="TOP_CENTER" prefHeight="409.0" prefWidth="78.0">
+                           <padding>
+                              <Insets bottom="30.0" top="25.0" />
+                           </padding></VBox>
                             </children>
                         </VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
@@ -238,9 +250,32 @@
                                         <Insets left="10.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue5" alignment="CENTER" prefHeight="408.0" prefWidth="78.0" />
+                                <VBox fx:id="vBoxQueue5" alignment="TOP_CENTER" prefHeight="408.0" prefWidth="78.0">
+                           <padding>
+                              <Insets bottom="30.0" top="25.0" />
+                           </padding></VBox>
                             </children>
                         </VBox>
+                  <VBox prefHeight="429.0" prefWidth="78.0">
+                     <children>
+                        <Label prefHeight="88.0" prefWidth="68.0" text="Waiting Clients" wrapText="true">
+                           <font>
+                              <Font name="Segoe UI Bold Italic" size="17.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <VBox fx:id="vBoxClients" alignment="TOP_CENTER" prefHeight="407.0" prefWidth="78.0">
+                           <padding>
+                              <Insets bottom="30.0" top="25.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </VBox>
                     </children>
                 </HBox>
                 <Label fx:id="lblValidateData">

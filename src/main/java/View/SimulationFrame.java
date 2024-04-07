@@ -1,13 +1,27 @@
 package View;
 
+import Model.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class SimulationFrame {
+
+    public void addClientToVBox(VBox vbox, Task task){
+        Label label = new Label(task.toString());
+        label.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+        vbox.getChildren().add(label);
+    }
+
+    public void clearWaitingClientList(VBox vbox){
+        vbox.getChildren().clear();
+    }
+
 
     public void setLblValidateData(String str){
         lblValidateData.setText(str);
@@ -98,6 +112,28 @@ public class SimulationFrame {
         return btnValidateData;
     }
 
+    public VBox getvBoxClients() {
+        return vBoxClients;
+    }
+
+    public VBox getvBoxQueue1() {
+        return vBoxQueue1;
+    }
+
+    public VBox getvBoxQueue2() {
+        return vBoxQueue2;
+    }
+    public VBox getvBoxQueue3() {
+        return vBoxQueue3;
+    }
+
+    public VBox getvBoxQueue4() {
+        return vBoxQueue4;
+    }
+    public VBox getvBoxQueue5() {
+        return vBoxQueue5;
+    }
+
     @FXML
     private TextField txtNrClients;
     @FXML
@@ -128,5 +164,6 @@ public class SimulationFrame {
     private VBox vBoxQueue4;
     @FXML
     private VBox vBoxQueue5;
-
+    @FXML
+    private VBox vBoxClients;
 }

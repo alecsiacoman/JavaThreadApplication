@@ -57,6 +57,7 @@ public class SimulationManager implements Runnable{
     @Override
     public void run() {
         int currentTime = 0;
+        Object lock = new Object();
         try(FileWriter writer = new FileWriter("logs.txt")){
             while(currentTime < timeLimit){
                 for (Server server : scheduler.getServers()) {
@@ -131,5 +132,9 @@ public class SimulationManager implements Runnable{
             }
         }
         return sb.toString();
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
     }
 }
