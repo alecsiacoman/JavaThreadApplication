@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SimulationManager implements Runnable{
     public int timeLimit;
@@ -24,6 +25,7 @@ public class SimulationManager implements Runnable{
     private Scheduler scheduler;
     private SimulationFrame frame;
     private List<Task> tasks;
+    private Object lock = new Object();
 
     public SimulationManager(int timeLimit, int maxArrivalTime, int minArrivalTime, int maxServiceTime, int minServiceTime, int numberOfServers, int numberOfClients, SimulationFrame frame, SelectionPolicy selectionPolicy){
         this.timeLimit = timeLimit;
@@ -40,12 +42,14 @@ public class SimulationManager implements Runnable{
         generateRandomTasks();
     }
 
-    public void generateRandomTasks(){
+    public synchronized void generateRandomTasks(){
         Random random = new Random();
         for(int i = 0; i < numberOfClients; i++){
             int arrivalTime = random.nextInt(maxArrivalTime - minArrivalTime + 1) + minArrivalTime;
             int serviceTime = random.nextInt(maxServiceTime - minServiceTime + 1) + minServiceTime;
-            tasks.add(new Task(i + 1, arrivalTime, serviceTime));
+            synchronized (lock){
+                tasks.add(new Task(i + 1, arrivalTime, serviceTime));
+            }
         }
         Collections.sort(tasks, Comparator.comparing(Task::getArrivalTime));
     }
@@ -58,12 +62,14 @@ public class SimulationManager implements Runnable{
                 for (Server server : scheduler.getServers()) {
                     server.setCurrentTime(currentTime);
                 }
-                Iterator<Task> iterator = tasks.iterator();
-                while (iterator.hasNext()){
-                    Task task = iterator.next();
-                    if (task.getArrivalTime() == currentTime){
-                        scheduler.dispatchTask(task);
-                        iterator.remove();
+                synchronized (lock){
+                    Iterator<Task> iterator = tasks.iterator();
+                    while (iterator.hasNext()){
+                        Task task = iterator.next();
+                        if (task.getArrivalTime() == currentTime){
+                            scheduler.dispatchTask(task);
+                            iterator.remove();
+                        }
                     }
                 }
                 String entry = generateLog(currentTime);
@@ -75,21 +81,20 @@ public class SimulationManager implements Runnable{
                 }catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(simulationEnded(currentTime)){
-                    System.out.println("SIMULATION ENDS!");
+                if(simulationEnded(currentTime))
                     break;
-                }
-
             }
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    private boolean simulationEnded(int currentTime) {
+    private synchronized boolean simulationEnded(int currentTime) {
         boolean allServersClosed = true;
-        boolean clientsWaiting = !tasks.isEmpty();
-
+        boolean clientsWaiting;
+        synchronized (lock){
+            clientsWaiting = !tasks.isEmpty();
+        }
         if (!clientsWaiting) {
             for (Server server : scheduler.getServers()) {
                 if (server.getQueueSize() != 0) {
@@ -104,12 +109,14 @@ public class SimulationManager implements Runnable{
         return !clientsWaiting && allServersClosed;
     }
 
-    private String generateLog(int currentTime) {
+    private synchronized String generateLog(int currentTime) {
         StringBuilder sb = new StringBuilder();
         sb.append("\nTime ").append(currentTime).append("\n");
         sb.append("Waiting clients: ");
-        for(Task task : tasks){
-            sb.append(task.toString());
+        synchronized (lock){
+            for(Task task : tasks){
+                sb.append(task.toString());
+            }
         }
         for (int i = 0; i < scheduler.getServers().size(); i++) {
             sb.append("\nQueue ").append(i + 1).append(": ");
