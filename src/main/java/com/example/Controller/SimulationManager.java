@@ -52,7 +52,6 @@ public class SimulationManager implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("SIMULATION STARTS!");
         int currentTime = 0;
         try(FileWriter writer = new FileWriter("logs.txt")){
             while(currentTime < timeLimit){

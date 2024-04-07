@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 public class Application extends javafx.application.Application {
 
-    private Boolean okData = true;
+    private Boolean okData;
     private int simulationInterval = -1;
     private int maxArrivalTime = -1;
     private int minArrivalTime = -1;
@@ -30,6 +30,7 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Queue Management Simulation");
         stage.setScene(scene);
         stage.show();
+        okData = false;
         setButtons(controller);
     }
 
@@ -39,9 +40,9 @@ public class Application extends javafx.application.Application {
             getData(controller);
             verifyData();
             if(okData == true)
-                controller.setLblValidateData("Valid DATA!");
+                controller.setLblValidateData("VALID data!");
             else {
-                controller.setLblValidateData("Invalid DATA!");
+                controller.setLblValidateData("INVALID data!");
             }
         });
 
@@ -65,7 +66,7 @@ public class Application extends javafx.application.Application {
     }
 
     private void verifyData() {
-        if(simulationInterval > 60 || simulationInterval <= 0)
+        if(simulationInterval <= 0)
             okData = false;
         if(minArrivalTime >= maxArrivalTime || minArrivalTime <= 0 || maxArrivalTime <= 0)
             okData = false;
