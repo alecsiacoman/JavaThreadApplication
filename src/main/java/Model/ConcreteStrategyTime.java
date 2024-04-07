@@ -17,7 +17,7 @@ public class ConcreteStrategyTime implements Strategy{
             }
         }
 
-        //add task to the server with shortest processing time
+        //add task to the server with the shortest processing time
         server.addTask(task);
     }
 }

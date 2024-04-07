@@ -22,10 +22,8 @@ public class SimulationManager implements Runnable{
     public int numberOfServers;
     public int numberOfClients;
     private Scheduler scheduler;
-    private SelectionPolicy selectionPolicy;
     private SimulationFrame frame;
     private List<Task> tasks;
-    private Server[] servers;
 
     public SimulationManager(int timeLimit, int maxArrivalTime, int minArrivalTime, int maxServiceTime, int minServiceTime, int numberOfServers, int numberOfClients, SimulationFrame frame, SelectionPolicy selectionPolicy){
         this.timeLimit = timeLimit;
@@ -37,12 +35,8 @@ public class SimulationManager implements Runnable{
         this.numberOfServers = numberOfServers;
         this.frame = frame;
         this.tasks = new ArrayList<>();
-        this.selectionPolicy = selectionPolicy;
         this.scheduler = new Scheduler(numberOfServers, 10);
         scheduler.changeStrategy(selectionPolicy);
-        this.servers = new Server[numberOfServers];
-        for(int i = 0; i < numberOfServers; i++)
-            servers[i] = new Server();
         generateRandomTasks();
     }
 
@@ -58,9 +52,13 @@ public class SimulationManager implements Runnable{
 
     @Override
     public void run() {
+        System.out.println("SIMULATION STARTS!");
         int currentTime = 0;
         try(FileWriter writer = new FileWriter("logs.txt")){
             while(currentTime < timeLimit){
+                for (Server server : scheduler.getServers()) {
+                    server.setCurrentTime(currentTime);
+                }
                 Iterator<Task> iterator = tasks.iterator();
                 while (iterator.hasNext()){
                     Task task = iterator.next();
@@ -72,16 +70,39 @@ public class SimulationManager implements Runnable{
                 String entry = generateLog(currentTime);
                 writer.write(entry + "\n");
                 System.out.println(entry);
+                currentTime++;
                 try{
                     Thread.sleep(1000);
-                }catch (InterruptedException e){
+                }catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                currentTime++;
+                if(simulationEnded(currentTime)){
+                    System.out.println("SIMULATION ENDS!");
+                    break;
+                }
+
             }
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    private boolean simulationEnded(int currentTime) {
+        boolean allServersClosed = true;
+        boolean clientsWaiting = !tasks.isEmpty();
+
+        if (!clientsWaiting) {
+            for (Server server : scheduler.getServers()) {
+                if (server.getQueueSize() != 0) {
+                    allServersClosed = false;
+                    break;
+                }
+            }
+        } else {
+            allServersClosed = false;
+        }
+
+        return !clientsWaiting && allServersClosed;
     }
 
     private String generateLog(int currentTime) {
@@ -91,15 +112,17 @@ public class SimulationManager implements Runnable{
         for(Task task : tasks){
             sb.append(task.toString());
         }
-        int i = 0;
-        for(Server item : scheduler.getServers()){
+        for (int i = 0; i < scheduler.getServers().size(); i++) {
             sb.append("\nQueue ").append(i + 1).append(": ");
-            if(item.getQueueSize() != 0){
-                Task[] tasksArray = item.getTasks();
+            Server server = scheduler.getServers().get(i);
+            Task[] tasksArray = server.getTasks();
+            if (server.getQueueSize() != 0) {
                 for (Task task : tasksArray) {
                     sb.append(task.toString());
                 }
-            } else sb.append("closed");
+            } else {
+                sb.append("closed");
+            }
         }
         return sb.toString();
     }
