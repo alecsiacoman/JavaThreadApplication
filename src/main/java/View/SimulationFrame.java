@@ -10,7 +10,28 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SimulationFrame {
+    @FXML
+    public void initialize() {
+        vBoxList.add(vBoxQueue1);
+        vBoxList.add(vBoxQueue2);
+        vBoxList.add(vBoxQueue3);
+        vBoxList.add(vBoxQueue4);
+        vBoxList.add(vBoxQueue5);
+        vBoxList.add(vBoxClients);
+    }
+
+    public void setLblTimer(int time){
+        String text = "Time: " + time;
+        lblValidateData.setText(text);
+    }
+
+    public List<VBox> getvBoxList() {
+        return vBoxList;
+    }
 
     public void addClientToVBox(VBox vbox, Task task){
         Label label = new Label(task.toString());
@@ -21,7 +42,6 @@ public class SimulationFrame {
     public void clearWaitingClientList(VBox vbox){
         vbox.getChildren().clear();
     }
-
 
     public void setLblValidateData(String str){
         lblValidateData.setText(str);
@@ -116,24 +136,6 @@ public class SimulationFrame {
         return vBoxClients;
     }
 
-    public VBox getvBoxQueue1() {
-        return vBoxQueue1;
-    }
-
-    public VBox getvBoxQueue2() {
-        return vBoxQueue2;
-    }
-    public VBox getvBoxQueue3() {
-        return vBoxQueue3;
-    }
-
-    public VBox getvBoxQueue4() {
-        return vBoxQueue4;
-    }
-    public VBox getvBoxQueue5() {
-        return vBoxQueue5;
-    }
-
     @FXML
     private TextField txtNrClients;
     @FXML
@@ -166,4 +168,5 @@ public class SimulationFrame {
     private VBox vBoxQueue5;
     @FXML
     private VBox vBoxClients;
+    List<VBox> vBoxList = new ArrayList<>();
 }

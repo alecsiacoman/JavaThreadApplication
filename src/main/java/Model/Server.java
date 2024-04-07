@@ -1,6 +1,8 @@
 package Model;
 
+import View.SimulationFrame;
 import com.example.Controller.SimulationManager;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.concurrent.BlockingDeque;

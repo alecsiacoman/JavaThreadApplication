@@ -90,18 +90,7 @@ public class Application extends javafx.application.Application {
                 maxServiceTime, minServiceTime,
                 activeQueues, numberOfClients, controller,
                 selectionPolicy);
-        updateWaitingClients(manager, controller);
         Thread simulationThread = new Thread(manager);
         simulationThread.start();
-    }
-
-    //GUI
-    private void updateWaitingClients(SimulationManager manager, SimulationFrame frame) {
-        Platform.runLater(() -> {
-            frame.clearWaitingClientList(frame.getvBoxClients());
-            for(Task task: manager.getTasks()){
-                frame.addClientToVBox(frame.getvBoxClients(), task);
-            }
-        });
     }
 }

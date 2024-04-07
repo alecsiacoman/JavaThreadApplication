@@ -179,94 +179,109 @@
                         </VBox>
                         <VBox layoutX="10.0" layoutY="10.0" prefHeight="429.0" prefWidth="78.0">
                             <children>
-                                <Label text="Queue 1">
+                                <Label fx:id="lblQueue1" text="Queue 1">
                                     <font>
                                         <Font name="Segoe UI" size="17.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets left="10.0" />
+                                        <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue1" alignment="TOP_CENTER" prefHeight="406.0" prefWidth="78.0">
+                                <VBox fx:id="vBoxQueue1" alignment="TOP_CENTER" prefHeight="359.0" prefWidth="77.0">
                            <padding>
                               <Insets bottom="30.0" top="25.0" />
-                           </padding></VBox>
+                           </padding>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></VBox>
                             </children></VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
                             <children>
-                                <Label text="Queue 2">
+                                <Label fx:id="lblQueue2" text="Queue 2">
                                     <font>
                                         <Font name="Segoe UI" size="17.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets left="10.0" />
+                                        <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue2" alignment="TOP_CENTER" prefHeight="407.0" prefWidth="78.0">
+                                <VBox fx:id="vBoxQueue2" alignment="TOP_CENTER" prefHeight="358.0" prefWidth="77.0">
                            <padding>
                               <Insets bottom="30.0" top="25.0" />
-                           </padding></VBox>
+                           </padding>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></VBox>
                             </children>
                         </VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
                             <children>
-                                <Label text="Queue 3">
+                                <Label fx:id="lblQueue3" text="Queue 3">
                                     <font>
                                         <Font name="Segoe UI" size="17.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets left="10.0" />
+                                        <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue3" alignment="TOP_CENTER" prefHeight="407.0" prefWidth="78.0">
+                                <VBox fx:id="vBoxQueue3" alignment="TOP_CENTER" prefHeight="349.0" prefWidth="77.0">
                            <padding>
                               <Insets bottom="30.0" top="25.0" />
-                           </padding></VBox>
+                           </padding>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></VBox>
                             </children>
                         </VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
                             <children>
-                                <Label text="Queue 4">
+                                <Label fx:id="lblQueue4" text="Queue 4">
                                     <font>
                                         <Font name="Segoe UI" size="17.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets left="10.0" />
+                                        <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue4" alignment="TOP_CENTER" prefHeight="409.0" prefWidth="78.0">
+                                <VBox fx:id="vBoxQueue4" alignment="TOP_CENTER" prefHeight="369.0" prefWidth="78.0">
                            <padding>
                               <Insets bottom="30.0" top="25.0" />
-                           </padding></VBox>
+                           </padding>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></VBox>
                             </children>
                         </VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
                             <children>
-                                <Label text="Queue 5">
+                                <Label fx:id="lblQueue5" text="Queue 5">
                                     <font>
                                         <Font name="Segoe UI" size="17.0" />
                                     </font>
                                     <VBox.margin>
-                                        <Insets left="10.0" />
+                                        <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue5" alignment="TOP_CENTER" prefHeight="408.0" prefWidth="78.0">
+                                <VBox fx:id="vBoxQueue5" alignment="TOP_CENTER" prefHeight="350.0" prefWidth="78.0">
                            <padding>
                               <Insets bottom="30.0" top="25.0" />
-                           </padding></VBox>
+                           </padding>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin></VBox>
                             </children>
                         </VBox>
                   <VBox prefHeight="429.0" prefWidth="78.0">
                      <children>
-                        <Label prefHeight="88.0" prefWidth="68.0" text="Waiting Clients" wrapText="true">
+                        <Label prefHeight="62.0" prefWidth="68.0" text="Waiting Clients" wrapText="true">
                            <font>
                               <Font name="Segoe UI Bold Italic" size="17.0" />
                            </font>
                            <VBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="10.0" top="25.0" />
                            </VBox.margin>
                         </Label>
-                        <VBox fx:id="vBoxClients" alignment="TOP_CENTER" prefHeight="407.0" prefWidth="78.0">
+                        <VBox fx:id="vBoxClients" alignment="TOP_CENTER" prefHeight="210.0" prefWidth="78.0">
                            <padding>
                               <Insets bottom="30.0" top="25.0" />
                            </padding>

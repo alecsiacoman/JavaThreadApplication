@@ -5,6 +5,7 @@ import Model.SelectionPolicy;
 import Model.Server;
 import Model.Task;
 import View.SimulationFrame;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -60,6 +61,8 @@ public class SimulationManager implements Runnable{
         Object lock = new Object();
         try(FileWriter writer = new FileWriter("logs.txt")){
             while(currentTime < timeLimit){
+                updateWaitingClients(this, frame, currentTime);
+                updateServerQueues(frame);
                 for (Server server : scheduler.getServers()) {
                     server.setCurrentTime(currentTime);
                 }
@@ -87,6 +90,31 @@ public class SimulationManager implements Runnable{
             }
         }catch (IOException e){
             e.printStackTrace();
+        }
+    }
+
+    //GUI
+    private void updateWaitingClients(SimulationManager manager, SimulationFrame frame, int currentTime) {
+        Platform.runLater(() -> {
+            frame.setLblTimer(currentTime);
+            frame.clearWaitingClientList(frame.getvBoxList().get(5));
+            for(Task task: manager.getTasks()){
+                frame.addClientToVBox(frame.getvBoxClients(), task);
+            }
+        });
+    }
+
+    private void updateServerQueues(SimulationFrame frame) {
+        for (int i = 0; i < scheduler.getServers().size(); i++) {
+            final int index = i;
+            Platform.runLater(() -> {
+                frame.clearWaitingClientList(frame.getvBoxList().get(index));
+                Server server = scheduler.getServers().get(index);
+                Task[] tasksArray = server.getTasks();
+                for (Task task : tasksArray) {
+                    frame.addClientToVBox(frame.getvBoxList().get(index), task);
+                }
+            });
         }
     }
 
