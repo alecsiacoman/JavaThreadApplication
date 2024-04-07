@@ -29,8 +29,10 @@ public class Server implements Runnable {
             try {
                 Task task = tasks.peek();
                 if (task != null && (task.getArrivalTime() + task.getServiceTime() == currentTime)) {
-                    tasks.poll();
-                    waitingPeriod.decrementAndGet();
+                    synchronized (this){
+                        tasks.poll();
+                        waitingPeriod.decrementAndGet();
+                    }
                     Thread.sleep( 1000);
                 }
             } catch (InterruptedException e) {
@@ -39,7 +41,7 @@ public class Server implements Runnable {
         }
     }
 
-    public void addTask(Task task){
+    public synchronized void addTask(Task task){
         tasks.offer(task);
         waitingPeriod.addAndGet(task.getServiceTime());
     }
@@ -48,11 +50,11 @@ public class Server implements Runnable {
         return tasks.toArray(new Task[0]);
     }
 
-    public AtomicInteger getWaitingPeriod() {
+    public synchronized AtomicInteger getWaitingPeriod() {
         return waitingPeriod;
     }
 
-    public int getQueueSize(){
+    public synchronized int getQueueSize(){
         return tasks.size();
     }
 }
