@@ -80,7 +80,7 @@ public class Application extends javafx.application.Application {
             okData = false;
         if(activeQueues <= 0 || activeQueues > 5)
             okData = false;
-        if(numberOfClients > 10 || numberOfClients <= 0)
+        if(numberOfClients <= 0)
             okData = false;
     }
 

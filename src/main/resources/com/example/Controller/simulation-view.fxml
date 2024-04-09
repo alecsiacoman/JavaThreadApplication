@@ -273,7 +273,7 @@
                         </VBox>
                   <VBox prefHeight="429.0" prefWidth="78.0">
                      <children>
-                        <Label prefHeight="62.0" prefWidth="68.0" text="Waiting Clients" wrapText="true">
+                        <Label maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="68.0" prefWidth="77.0" text="Waiting Clients" wrapText="true">
                            <font>
                               <Font name="Segoe UI Bold Italic" size="17.0" />
                            </font>
@@ -281,7 +281,7 @@
                               <Insets left="10.0" top="25.0" />
                            </VBox.margin>
                         </Label>
-                        <VBox fx:id="vBoxClients" alignment="TOP_CENTER" prefHeight="210.0" prefWidth="78.0">
+                        <VBox fx:id="vBoxClients" alignment="TOP_CENTER" prefHeight="324.0" prefWidth="78.0">
                            <padding>
                               <Insets bottom="30.0" top="25.0" />
                            </padding>

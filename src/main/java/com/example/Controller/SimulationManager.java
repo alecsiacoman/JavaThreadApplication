@@ -6,14 +6,11 @@ import Model.Server;
 import Model.Task;
 import View.SimulationFrame;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class SimulationManager implements Runnable{
     public int timeLimit;
@@ -23,10 +20,10 @@ public class SimulationManager implements Runnable{
     public int minServiceTime;
     public int numberOfServers;
     public int numberOfClients;
-    private Scheduler scheduler;
-    private SimulationFrame frame;
-    private List<Task> tasks;
-    private Object lock = new Object();
+    private final Scheduler scheduler;
+    private final SimulationFrame frame;
+    private volatile ConcurrentLinkedQueue<Task> tasks;
+    private final Object lock = new Object();
 
     public SimulationManager(int timeLimit, int maxArrivalTime, int minArrivalTime, int maxServiceTime, int minServiceTime, int numberOfServers, int numberOfClients, SimulationFrame frame, SelectionPolicy selectionPolicy){
         this.timeLimit = timeLimit;
@@ -37,22 +34,23 @@ public class SimulationManager implements Runnable{
         this.numberOfClients = numberOfClients;
         this.numberOfServers = numberOfServers;
         this.frame = frame;
-        this.tasks = new ArrayList<>();
+        List<Task> list = generateRandomTasks();
+        this.tasks = new ConcurrentLinkedQueue<>(list);
         this.scheduler = new Scheduler(numberOfServers, 10);
         scheduler.changeStrategy(selectionPolicy);
-        generateRandomTasks();
+
     }
 
-    public synchronized void generateRandomTasks(){
+    public List<Task> generateRandomTasks() {
+        List<Task> tasks = new ArrayList<>();
         Random random = new Random();
-        for(int i = 0; i < numberOfClients; i++){
+        for (int i = 0; i < numberOfClients; i++) {
             int arrivalTime = random.nextInt(maxArrivalTime - minArrivalTime + 1) + minArrivalTime;
             int serviceTime = random.nextInt(maxServiceTime - minServiceTime + 1) + minServiceTime;
-            synchronized (lock){
-                tasks.add(new Task(i + 1, arrivalTime, serviceTime));
-            }
+            tasks.add(new Task(i + 1, arrivalTime, serviceTime));
         }
         Collections.sort(tasks, Comparator.comparing(Task::getArrivalTime));
+        return tasks;
     }
 
     @Override
@@ -66,7 +64,7 @@ public class SimulationManager implements Runnable{
                 for (Server server : scheduler.getServers()) {
                     server.setCurrentTime(currentTime);
                 }
-                synchronized (lock){
+                synchronized (tasks){
                     Iterator<Task> iterator = tasks.iterator();
                     while (iterator.hasNext()){
                         Task task = iterator.next();
@@ -98,8 +96,10 @@ public class SimulationManager implements Runnable{
         Platform.runLater(() -> {
             frame.setLblTimer(currentTime);
             frame.clearWaitingClientList(frame.getvBoxList().get(5));
-            for(Task task: manager.getTasks()){
-                frame.addClientToVBox(frame.getvBoxClients(), task);
+            synchronized (tasks){
+                for(Task task: manager.getTasks()){
+                    frame.addClientToVBox(frame.getvBoxClients(), task);
+                }
             }
         });
     }
@@ -118,10 +118,10 @@ public class SimulationManager implements Runnable{
         }
     }
 
-    private synchronized boolean simulationEnded(int currentTime) {
+    private boolean simulationEnded(int currentTime) {
         boolean allServersClosed = true;
         boolean clientsWaiting;
-        synchronized (lock){
+        synchronized (tasks){
             clientsWaiting = !tasks.isEmpty();
         }
         if (!clientsWaiting) {
@@ -138,11 +138,11 @@ public class SimulationManager implements Runnable{
         return !clientsWaiting && allServersClosed;
     }
 
-    private synchronized String generateLog(int currentTime) {
+    private String generateLog(int currentTime) {
         StringBuilder sb = new StringBuilder();
         sb.append("\nTime ").append(currentTime).append("\n");
         sb.append("Waiting clients: ");
-        synchronized (lock){
+        synchronized (tasks){
             for(Task task : tasks){
                 sb.append(task.toString());
             }
@@ -162,7 +162,7 @@ public class SimulationManager implements Runnable{
         return sb.toString();
     }
 
-    public List<Task> getTasks() {
+    public ConcurrentLinkedQueue<Task> getTasks() {
         return tasks;
     }
 }

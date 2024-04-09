@@ -23,6 +23,8 @@ public class Task {
         return serviceTime;
     }
 
+    public void decrementServiceTime() { this.serviceTime--; }
+
     @Override
     public String toString(){
         return "(" + ID + " " + arrivalTime + " " + serviceTime + "); ";

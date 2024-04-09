@@ -1,14 +1,11 @@
 package Model;
 
 import View.SimulationFrame;
-import com.example.Controller.SimulationManager;
+
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Server implements Runnable {
@@ -17,7 +14,7 @@ public class Server implements Runnable {
     private int currentTime;
 
     public Server(){
-        tasks = new LinkedBlockingDeque<>();
+        tasks = new LinkedBlockingQueue<>();
         waitingPeriod = new AtomicInteger(0);
     }
 
@@ -30,12 +27,15 @@ public class Server implements Runnable {
         while(true){
             try {
                 Task task = tasks.peek();
-                if (task != null && (task.getArrivalTime() + task.getServiceTime() == currentTime)) {
-                    synchronized (this){
-                        tasks.poll();
-                        waitingPeriod.decrementAndGet();
+                if (task != null){
+                    // task.decrementServiceTime();
+                    if(task.getArrivalTime() + task.getServiceTime() == currentTime) {
+                        synchronized (this){
+                            tasks.poll();
+                            waitingPeriod.decrementAndGet();
+                        }
+                        Thread.sleep( 1000);
                     }
-                    Thread.sleep( 1000);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
