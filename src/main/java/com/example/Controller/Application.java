@@ -32,7 +32,7 @@ public class Application extends javafx.application.Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("simulation-view.fxml"));
         SimulationFrame controller = new SimulationFrame();
         fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 990, 565);
+        Scene scene = new Scene(fxmlLoader.load(), 990, 520);
         stage.setTitle("Queue Management Simulation");
         stage.setScene(scene);
         stage.show();

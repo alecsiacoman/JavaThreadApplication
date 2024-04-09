@@ -6,12 +6,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="990.0" style="-fx-background-color: def4c6;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox alignment="TOP_CENTER" prefHeight="510.0" prefWidth="993.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="TOP_CENTER" prefHeight="518.0" prefWidth="990.0" AnchorPane.bottomAnchor="-8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label text="QUEUE MANAGEMENT" textAlignment="CENTER">
                     <font>
@@ -187,13 +188,15 @@
                                         <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue1" alignment="TOP_CENTER" prefHeight="359.0" prefWidth="77.0">
-                           <padding>
-                              <Insets bottom="30.0" top="25.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin></VBox>
+                        <Pane prefHeight="356.0" prefWidth="76.0">
+                           <children>
+                                      <VBox fx:id="vBoxQueue1" alignment="TOP_CENTER" prefHeight="359.0" prefWidth="77.0">
+                                 <padding>
+                                    <Insets bottom="30.0" top="25.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </Pane>
                             </children></VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
                             <children>
@@ -205,13 +208,15 @@
                                         <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue2" alignment="TOP_CENTER" prefHeight="358.0" prefWidth="77.0">
-                           <padding>
-                              <Insets bottom="30.0" top="25.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin></VBox>
+                        <Pane prefHeight="359.0" prefWidth="76.0">
+                           <children>
+                                      <VBox fx:id="vBoxQueue2" alignment="TOP_CENTER" prefHeight="358.0" prefWidth="77.0">
+                                 <padding>
+                                    <Insets bottom="30.0" top="25.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </Pane>
                             </children>
                         </VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
@@ -224,13 +229,15 @@
                                         <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue3" alignment="TOP_CENTER" prefHeight="349.0" prefWidth="77.0">
-                           <padding>
-                              <Insets bottom="30.0" top="25.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin></VBox>
+                        <Pane prefHeight="357.0" prefWidth="76.0">
+                           <children>
+                                      <VBox fx:id="vBoxQueue3" alignment="TOP_CENTER" prefHeight="349.0" prefWidth="77.0">
+                                 <padding>
+                                    <Insets bottom="30.0" top="25.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </Pane>
                             </children>
                         </VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
@@ -243,13 +250,15 @@
                                         <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue4" alignment="TOP_CENTER" prefHeight="369.0" prefWidth="78.0">
-                           <padding>
-                              <Insets bottom="30.0" top="25.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin></VBox>
+                        <Pane prefHeight="359.0" prefWidth="76.0">
+                           <children>
+                                      <VBox fx:id="vBoxQueue4" alignment="TOP_CENTER" prefHeight="355.0" prefWidth="78.0">
+                                 <padding>
+                                    <Insets bottom="30.0" top="25.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </Pane>
                             </children>
                         </VBox>
                         <VBox prefHeight="429.0" prefWidth="78.0">
@@ -262,13 +271,15 @@
                                         <Insets left="10.0" top="35.0" />
                                     </VBox.margin>
                                 </Label>
-                                <VBox fx:id="vBoxQueue5" alignment="TOP_CENTER" prefHeight="350.0" prefWidth="78.0">
-                           <padding>
-                              <Insets bottom="30.0" top="25.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin></VBox>
+                        <Pane prefHeight="356.0" prefWidth="76.0">
+                           <children>
+                                      <VBox fx:id="vBoxQueue5" alignment="TOP_CENTER" prefHeight="350.0" prefWidth="78.0">
+                                 <padding>
+                                    <Insets bottom="30.0" top="25.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </Pane>
                             </children>
                         </VBox>
                   <VBox prefHeight="429.0" prefWidth="78.0">
@@ -281,11 +292,15 @@
                               <Insets left="10.0" top="25.0" />
                            </VBox.margin>
                         </Label>
-                        <VBox fx:id="vBoxClients" alignment="TOP_CENTER" prefHeight="324.0" prefWidth="78.0">
-                           <padding>
-                              <Insets bottom="30.0" top="25.0" />
-                           </padding>
-                        </VBox>
+                        <Pane prefHeight="321.0" prefWidth="87.0">
+                           <children>
+                              <VBox fx:id="vBoxClients" alignment="TOP_CENTER" maxHeight="324.0" prefHeight="324.0" prefWidth="87.0">
+                                 <padding>
+                                    <Insets bottom="30.0" top="25.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </Pane>
                      </children>
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -293,13 +308,18 @@
                   </VBox>
                     </children>
                 </HBox>
-                <Label fx:id="lblValidateData">
+            <Pane prefHeight="27.0" prefWidth="990.0">
+               <children>
+                      <Label fx:id="lblValidateData" alignment="CENTER" contentDisplay="CENTER" layoutX="116.0" layoutY="2.0" prefHeight="22.0" prefWidth="244.0">
+                     <font>
+                        <Font name="Segoe UI Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
                <VBox.margin>
-                  <Insets bottom="10.0" top="15.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
-               <font>
-                  <Font name="Segoe UI Bold" size="15.0" />
-               </font></Label>
+            </Pane>
             </children>
         </VBox>
     </children>
