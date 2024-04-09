@@ -59,8 +59,10 @@ public class SimulationManager implements Runnable{
         Object lock = new Object();
         try(FileWriter writer = new FileWriter("logs.txt")){
             while(currentTime < timeLimit){
-                updateWaitingClients(this, frame, currentTime);
-                updateServerQueues(frame);
+                if(Application.getActiveQueues() <= 5)
+                    updateWaitingClients(this, frame, currentTime);
+                if(Application.getActiveQueues() <= 5)
+                    updateServerQueues(frame);
                 for (Server server : scheduler.getServers()) {
                     server.setCurrentTime(currentTime);
                 }
@@ -84,7 +86,8 @@ public class SimulationManager implements Runnable{
                     e.printStackTrace();
                 }
                 if(simulationEnded(currentTime)){
-                    updateServerQueues(frame);
+                    if(Application.getActiveQueues() <= 5)
+                        updateServerQueues(frame);
                     entry = generateLog(currentTime);
                     writer.write(entry + "\nSIMULATION ENDED!");
                     System.out.println(entry);

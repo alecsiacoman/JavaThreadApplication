@@ -310,7 +310,7 @@
                 </HBox>
             <Pane prefHeight="27.0" prefWidth="990.0">
                <children>
-                      <Label fx:id="lblValidateData" alignment="CENTER" contentDisplay="CENTER" layoutX="116.0" layoutY="2.0" prefHeight="22.0" prefWidth="244.0">
+                      <Label fx:id="lblValidateData" alignment="CENTER" contentDisplay="CENTER" layoutX="80.0" layoutY="3.0" prefHeight="22.0" prefWidth="331.0">
                      <font>
                         <Font name="Segoe UI Bold" size="15.0" />
                      </font>
