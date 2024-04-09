@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import static java.lang.Math.abs;
+
 public class SimulationManager implements Runnable{
     public int timeLimit;
     public int maxArrivalTime;
@@ -24,6 +26,9 @@ public class SimulationManager implements Runnable{
     private final SimulationFrame frame;
     private volatile ConcurrentLinkedQueue<Task> tasks;
     private final Object lock = new Object();
+    private Map<Integer, Integer> hourlyArrivals = new HashMap<>();
+    private int averageWaitingTime;
+    private int averageServiceTime;
 
     public SimulationManager(int timeLimit, int maxArrivalTime, int minArrivalTime, int maxServiceTime, int minServiceTime, int numberOfServers, int numberOfClients, SimulationFrame frame, SelectionPolicy selectionPolicy){
         this.timeLimit = timeLimit;
@@ -36,6 +41,7 @@ public class SimulationManager implements Runnable{
         this.frame = frame;
         List<Task> list = generateRandomTasks();
         this.tasks = new ConcurrentLinkedQueue<>(list);
+        computeResultTime();
         this.scheduler = new Scheduler(numberOfServers, 10);
         scheduler.changeStrategy(selectionPolicy);
 
@@ -73,6 +79,7 @@ public class SimulationManager implements Runnable{
                         if (task.getArrivalTime() == currentTime){
                             scheduler.dispatchTask(task);
                             iterator.remove();
+                            hourlyArrivals.put(currentTime, hourlyArrivals.getOrDefault(currentTime, 0) + 1);
                         }
                     }
                 }
@@ -90,6 +97,8 @@ public class SimulationManager implements Runnable{
                         updateServerQueues(frame);
                     entry = generateLog(currentTime);
                     writer.write(entry + "\nSIMULATION ENDED!");
+                    String text = generateResults();
+                    writer.write(text);
                     System.out.println(entry);
                     System.out.println("SIMULATION ENDED!");
                     break;
@@ -170,6 +179,28 @@ public class SimulationManager implements Runnable{
             }
         }
         return sb.toString();
+    }
+
+    private void computeResultTime(){
+        int totalWaitingTime = 0, totalServiceTime = 0;
+        for(Task task : tasks){
+            totalWaitingTime += abs(task.getArrivalTime() - task.getServiceTime());
+            totalServiceTime += task.getServiceTime();
+        }
+        averageWaitingTime = totalWaitingTime / Application.getNumberOfClients();
+        averageServiceTime = totalServiceTime / Application.getNumberOfClients();
+    }
+    private String generateResults(){
+        int peakHour = -1;
+        int maxArrivals = 0;
+        for (Map.Entry<Integer, Integer> entry : hourlyArrivals.entrySet()) {
+            if (entry.getValue() > maxArrivals) {
+                maxArrivals = entry.getValue();
+                peakHour = entry.getKey();
+            }
+        }
+        String text = "\n\nSIMULATIONS DETAILS:\nAverage waiting time: " + averageWaitingTime + "\nAverage service time: " + averageServiceTime + "\nPeak hour: " + peakHour + "\n";
+        return text;
     }
 
     public ConcurrentLinkedQueue<Task> getTasks() {

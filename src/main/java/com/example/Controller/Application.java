@@ -21,7 +21,7 @@ public class Application extends javafx.application.Application {
     private volatile int maxServiceTime = -1;
     private volatile int minServiceTime = -1;
     private static volatile int activeQueues = -1;
-    private volatile int numberOfClients = -1;
+    private static volatile int numberOfClients = -1;
 
     public static void main(String[] args) {
         launch();
@@ -58,7 +58,7 @@ public class Application extends javafx.application.Application {
                     controller.setLblValidateData("");
                 else
                     controller.setLblValidateData("Cannot display the simulation! See logs!");
-                startSimulation(simulationInterval, maxArrivalTime, minArrivalTime, maxServiceTime, minServiceTime, activeQueues, numberOfClients, controller, SelectionPolicy.SHORTEST_QUEUE);
+                startSimulation(simulationInterval, maxArrivalTime, minArrivalTime, maxServiceTime, minServiceTime, activeQueues, numberOfClients, controller, SelectionPolicy.SHORTEST_TIME);
             } else { controller.setLblValidateData("Cannot start the simulation until the data is valid!"); }
         });
     }
@@ -99,5 +99,9 @@ public class Application extends javafx.application.Application {
 
     public static int getActiveQueues() {
         return activeQueues;
+    }
+
+    public static int getNumberOfClients() {
+        return numberOfClients;
     }
 }
