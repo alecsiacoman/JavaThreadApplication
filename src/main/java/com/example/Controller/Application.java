@@ -78,7 +78,7 @@ public class Application extends javafx.application.Application {
             okData = false;
         if(minServiceTime >= maxServiceTime || minServiceTime <= 0 || maxServiceTime <= 0)
             okData = false;
-        if(activeQueues <= 0 || activeQueues > 5)
+        if(activeQueues <= 0)
             okData = false;
         if(numberOfClients <= 0)
             okData = false;

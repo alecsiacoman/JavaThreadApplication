@@ -28,15 +28,15 @@ public class Server implements Runnable {
             try {
                 Task task = tasks.peek();
                 if (task != null){
-                    // task.decrementServiceTime();
-                    if(task.getArrivalTime() + task.getServiceTime() == currentTime) {
+                    task.decrementServiceTime();
+                    if(task.getServiceTime() == 0) {
                         synchronized (this){
                             tasks.poll();
                             waitingPeriod.decrementAndGet();
                         }
-                        Thread.sleep( 1000);
                     }
                 }
+                Thread.sleep( 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

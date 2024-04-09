@@ -83,8 +83,15 @@ public class SimulationManager implements Runnable{
                 }catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(simulationEnded(currentTime))
+                if(simulationEnded(currentTime)){
+                    updateServerQueues(frame);
+                    entry = generateLog(currentTime);
+                    writer.write(entry + "\nSIMULATION ENDED!");
+                    System.out.println(entry);
+                    System.out.println("SIMULATION ENDED!");
                     break;
+                }
+
             }
         }catch (IOException e){
             e.printStackTrace();
