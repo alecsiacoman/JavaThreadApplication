@@ -7,6 +7,8 @@
     <list default="true" id="381660ef-d7d0-40d5-be88-a2344ab5deab" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/View/SimulationFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/View/SimulationFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Controller/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Controller/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Controller/SimulationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Controller/SimulationManager.java" afterDir="false" />
     </list>
@@ -45,6 +47,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Facultate/Stratec_Challenge&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -74,7 +77,11 @@
       <workItem from="1712315440967" duration="18156000" />
       <workItem from="1712425379952" duration="23000" />
       <workItem from="1712484841245" duration="11675000" />
-      <workItem from="1712665124037" duration="9428000" />
+      <workItem from="1712665124037" duration="9552000" />
+      <workItem from="1712690903560" duration="308000" />
+      <workItem from="1712731649864" duration="652000" />
+      <workItem from="1712841635439" duration="3873000" />
+      <workItem from="1712905427227" duration="2901000" />
     </task>
     <servers />
   </component>

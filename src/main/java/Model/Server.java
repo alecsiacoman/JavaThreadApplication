@@ -29,10 +29,10 @@ public class Server implements Runnable {
                 Task task = tasks.peek();
                 if (task != null){
                     task.decrementServiceTime();
+                    waitingPeriod.decrementAndGet();
                     if(task.getServiceTime() == 0) {
-                        synchronized (this){
+                        synchronized (this) {
                             tasks.poll();
-                            waitingPeriod.decrementAndGet();
                         }
                     }
                 }

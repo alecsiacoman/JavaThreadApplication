@@ -1,6 +1,7 @@
 package View;
 
 import Model.Task;
+import com.example.Controller.SimulationManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,6 +23,12 @@ public class SimulationFrame {
         vBoxList.add(vBoxQueue4);
         vBoxList.add(vBoxQueue5);
         vBoxList.add(vBoxClients);
+        btnValidateData.setOnAction(event -> simulationManager.validateData(this));
+        btnStartSimulation.setOnAction(event -> simulationManager.startSimulation(this));
+    }
+
+    public void setSimulationManager(SimulationManager manager){
+        this.simulationManager = manager;
     }
 
     public void setLblTimer(int time){
@@ -169,4 +176,5 @@ public class SimulationFrame {
     @FXML
     private VBox vBoxClients;
     List<VBox> vBoxList = new ArrayList<>();
+    private SimulationManager simulationManager;
 }

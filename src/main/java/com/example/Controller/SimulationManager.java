@@ -15,35 +15,74 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import static java.lang.Math.abs;
 
 public class SimulationManager implements Runnable{
-    public int timeLimit;
-    public int maxArrivalTime;
-    public int minArrivalTime;
-    public int maxServiceTime;
-    public int minServiceTime;
-    public int numberOfServers;
-    public int numberOfClients;
+    public volatile int timeLimit;
+    public volatile int maxArrivalTime;
+    public volatile int minArrivalTime;
+    public volatile int maxServiceTime;
+    public volatile int minServiceTime;
+    public static int numberOfServers;
+    public static int numberOfClients;
+    private int averageWaitingTime;
+    private int averageServiceTime;
     private final Scheduler scheduler;
     private final SimulationFrame frame;
     private volatile ConcurrentLinkedQueue<Task> tasks;
-    private final Object lock = new Object();
     private Map<Integer, Integer> hourlyArrivals = new HashMap<>();
-    private int averageWaitingTime;
-    private int averageServiceTime;
+    private volatile Boolean okData = false;
 
-    public SimulationManager(int timeLimit, int maxArrivalTime, int minArrivalTime, int maxServiceTime, int minServiceTime, int numberOfServers, int numberOfClients, SimulationFrame frame, SelectionPolicy selectionPolicy){
-        this.timeLimit = timeLimit;
-        this.minArrivalTime = minArrivalTime;
-        this.maxServiceTime = maxServiceTime;
-        this.minServiceTime = minServiceTime;
-        this.maxArrivalTime = maxArrivalTime;
-        this.numberOfClients = numberOfClients;
-        this.numberOfServers = numberOfServers;
+    public SimulationManager(SimulationFrame frame, SelectionPolicy selectionPolicy){
         this.frame = frame;
+        setData(frame);
         List<Task> list = generateRandomTasks();
         this.tasks = new ConcurrentLinkedQueue<>(list);
         computeResultTime();
         this.scheduler = new Scheduler(numberOfServers, 10);
         scheduler.changeStrategy(selectionPolicy);
+    }
+
+    private synchronized void setData(SimulationFrame controller){
+
+        this.timeLimit = controller.getSimulationInterval();
+        this.maxArrivalTime = controller.getMaximumArrivalTime();
+        this.minArrivalTime = controller.getMinimumArrivalTime();
+        this.maxServiceTime = controller.getMaximumServiceTime();
+        this.minServiceTime = controller.getMinimumServiceTime();
+        this.numberOfServers = controller.getActiveQueues();
+        this.numberOfClients = controller.getNumberOfClients();
+    }
+
+    private synchronized void verifyData() {
+        if(timeLimit <= 0)
+            okData = false;
+        if(minArrivalTime >= maxArrivalTime || minArrivalTime <= 0 || maxArrivalTime <= 0)
+            okData = false;
+        if(minServiceTime >= maxServiceTime || minServiceTime <= 0 || maxServiceTime <= 0)
+            okData = false;
+        if(numberOfServers <= 0)
+            okData = false;
+        if(numberOfClients <= 0)
+            okData = false;
+    }
+
+    public void validateData(SimulationFrame controller){
+        okData = true;
+        setData(controller);
+        verifyData();
+        if(okData == true)
+            controller.setLblValidateData("VALID data!");
+        else {
+            controller.setLblValidateData("INVALID data!");
+        }
+    }
+
+    public void startSimulation(SimulationFrame controller){
+        if(okData == true){
+            if(numberOfClients <= 5)
+                controller.setLblValidateData("");
+            else
+                controller.setLblValidateData("Cannot display the simulation! See logs!");
+            Application.startSimulation(controller, SelectionPolicy.SHORTEST_QUEUE);
+        } else { controller.setLblValidateData("Cannot start the simulation until the data is valid!"); }
 
     }
 
@@ -62,12 +101,11 @@ public class SimulationManager implements Runnable{
     @Override
     public void run() {
         int currentTime = 0;
-        Object lock = new Object();
         try(FileWriter writer = new FileWriter("logs.txt")){
             while(currentTime < timeLimit){
-                if(Application.getActiveQueues() <= 5)
+                if(getActiveQueues() <= 5)
                     updateWaitingClients(this, frame, currentTime);
-                if(Application.getActiveQueues() <= 5)
+                if(getActiveQueues() <= 5)
                     updateServerQueues(frame);
                 for (Server server : scheduler.getServers()) {
                     server.setCurrentTime(currentTime);
@@ -92,8 +130,8 @@ public class SimulationManager implements Runnable{
                 }catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(simulationEnded(currentTime)){
-                    if(Application.getActiveQueues() <= 5)
+                if(simulationEnded()){
+                    if(getActiveQueues() <= 5)
                         updateServerQueues(frame);
                     entry = generateLog(currentTime);
                     writer.write(entry + "\nSIMULATION ENDED!");
@@ -137,7 +175,7 @@ public class SimulationManager implements Runnable{
         }
     }
 
-    private boolean simulationEnded(int currentTime) {
+    private boolean simulationEnded() {
         boolean allServersClosed = true;
         boolean clientsWaiting;
         synchronized (tasks){
@@ -187,8 +225,8 @@ public class SimulationManager implements Runnable{
             totalWaitingTime += abs(task.getArrivalTime() - task.getServiceTime());
             totalServiceTime += task.getServiceTime();
         }
-        averageWaitingTime = totalWaitingTime / Application.getNumberOfClients();
-        averageServiceTime = totalServiceTime / Application.getNumberOfClients();
+        averageWaitingTime = totalWaitingTime / getNumberOfClients();
+        averageServiceTime = totalServiceTime / getNumberOfClients();
     }
     private String generateResults(){
         int peakHour = -1;
@@ -205,5 +243,13 @@ public class SimulationManager implements Runnable{
 
     public ConcurrentLinkedQueue<Task> getTasks() {
         return tasks;
+    }
+
+    public static int getActiveQueues() {
+        return numberOfServers;
+    }
+
+    public static int getNumberOfClients() {
+        return numberOfClients;
     }
 }
