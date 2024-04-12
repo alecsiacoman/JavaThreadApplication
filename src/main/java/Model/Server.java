@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Server implements Runnable {
@@ -19,7 +20,8 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
-        while(true){
+        boolean notDone = true;
+        while(notDone){
             try {
                 Task task = tasks.peek();
                 if (task != null){
@@ -29,9 +31,12 @@ public class Server implements Runnable {
                         synchronized (this) {
                             tasks.poll();
                         }
+                        if (tasks.isEmpty()) {
+                            notDone = false;
+                        }
                     }
                 }
-                Thread.sleep( 1000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
