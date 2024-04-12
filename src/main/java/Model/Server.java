@@ -1,10 +1,5 @@
 package Model;
 
-import View.SimulationFrame;
-
-import javafx.application.Platform;
-import javafx.beans.property.SimpleBooleanProperty;
-
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 

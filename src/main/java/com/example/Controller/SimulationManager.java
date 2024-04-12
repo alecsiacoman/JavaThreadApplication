@@ -103,49 +103,50 @@ public class SimulationManager implements Runnable{
         int currentTime = 0;
         try(FileWriter writer = new FileWriter("logs.txt")){
             while(currentTime < timeLimit){
-                if(getActiveQueues() <= 5)
+                if(getActiveQueues() <= 5){
                     updateWaitingClients(this, frame, currentTime);
-                if(getActiveQueues() <= 5)
                     updateServerQueues(frame);
+                }
                 for (Server server : scheduler.getServers()) {
                     server.setCurrentTime(currentTime);
                 }
-                synchronized (tasks){
-                    Iterator<Task> iterator = tasks.iterator();
-                    while (iterator.hasNext()){
-                        Task task = iterator.next();
-                        if (task.getArrivalTime() == currentTime){
-                            scheduler.dispatchTask(task);
-                            iterator.remove();
-                            hourlyArrivals.put(currentTime, hourlyArrivals.getOrDefault(currentTime, 0) + 1);
-                        }
-                    }
-                }
+                processTasks(currentTime);
                 String entry = generateLog(currentTime);
                 writer.write(entry + "\n");
                 System.out.println(entry);
                 currentTime++;
-                try{
-                    Thread.sleep(1000);
-                }catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Thread.sleep(1000);
                 if(simulationEnded()){
-                    if(getActiveQueues() <= 5)
-                        updateServerQueues(frame);
-                    entry = generateLog(currentTime);
-                    writer.write(entry + "\nSIMULATION ENDED!");
-                    String text = generateResults();
-                    writer.write(text);
-                    System.out.println(entry);
-                    System.out.println("SIMULATION ENDED!");
+                    handleSimulationEnd(currentTime, writer);
                     break;
                 }
-
             }
-        }catch (IOException e){
+        }catch (IOException | InterruptedException e){
             e.printStackTrace();
         }
+    }
+
+    private void processTasks(int currentTime){
+        synchronized (tasks){
+            Iterator<Task> iterator = tasks.iterator();
+            while (iterator.hasNext()){
+                Task task = iterator.next();
+                if (task.getArrivalTime() == currentTime){
+                    scheduler.dispatchTask(task);
+                    iterator.remove();
+                    hourlyArrivals.put(currentTime, hourlyArrivals.getOrDefault(currentTime, 0) + 1);
+                }
+            }
+        }
+    }
+
+    private void handleSimulationEnd(int currentTime, FileWriter writer) throws IOException {
+        updateServerQueues(frame);
+        String entry = generateLog(currentTime);
+        writer.write(entry + "\nSIMULATION ENDED!");
+        writer.write(generateResults());
+        System.out.println(entry);
+        System.out.println("SIMULATION ENDED!");
     }
 
     //GUI
