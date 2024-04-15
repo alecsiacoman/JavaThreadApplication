@@ -8,10 +8,12 @@ public class Server implements Runnable {
     private BlockingQueue<Task> tasks;
     private AtomicInteger waitingPeriod;
     private int currentTime;
+    private volatile Boolean notDone;
 
     public Server(){
         tasks = new LinkedBlockingQueue<>();
         waitingPeriod = new AtomicInteger(0);
+        notDone = true;
     }
 
     public void setCurrentTime(int currentTime) {
@@ -20,7 +22,6 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
-        boolean notDone = true;
         while(notDone){
             try {
                 Task task = tasks.peek();
@@ -30,9 +31,6 @@ public class Server implements Runnable {
                     if(task.getServiceTime() == 0) {
                         synchronized (this) {
                             tasks.poll();
-                        }
-                        if (tasks.isEmpty()) {
-                            notDone = false;
                         }
                     }
                 }

@@ -23,12 +23,12 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Queue Management Simulation");
         stage.setScene(scene);
         stage.show();
-        SimulationManager manager = new SimulationManager(controller, SelectionPolicy.SHORTEST_QUEUE);
+        SimulationManager manager = new SimulationManager(controller);
         controller.setSimulationManager(manager);
     }
 
-    public synchronized static void startSimulation(SimulationFrame controller, SelectionPolicy selectionPolicy){
-        SimulationManager manager = new SimulationManager(controller, selectionPolicy);
+    public synchronized static void startSimulation(SimulationFrame controller){
+        SimulationManager manager = new SimulationManager(controller);
         Thread simulationThread = new Thread(manager);
         simulationThread.start();
     }

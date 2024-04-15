@@ -4,6 +4,7 @@ import Model.Task;
 import com.example.Controller.SimulationManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -17,6 +18,12 @@ import java.util.List;
 public class SimulationFrame {
     @FXML
     public void initialize() {
+        // Add items to the ComboBox
+        comboBox.getItems().addAll(
+                "Strategy QUEUE",
+                "Strategy TIME"
+        );
+        comboBox.setValue("Strategy QUEUE");
         vBoxList.add(vBoxQueue1);
         vBoxList.add(vBoxQueue2);
         vBoxList.add(vBoxQueue3);
@@ -25,6 +32,10 @@ public class SimulationFrame {
         vBoxList.add(vBoxClients);
         btnValidateData.setOnAction(event -> simulationManager.validateData(this));
         btnStartSimulation.setOnAction(event -> simulationManager.startSimulation(this));
+    }
+
+    public String getStrategy(){
+        return comboBox.getValue();
     }
 
     public void setSimulationManager(SimulationManager manager){
@@ -177,4 +188,6 @@ public class SimulationFrame {
     private VBox vBoxClients;
     List<VBox> vBoxList = new ArrayList<>();
     private SimulationManager simulationManager;
+    @FXML
+    private ComboBox<String> comboBox;
 }

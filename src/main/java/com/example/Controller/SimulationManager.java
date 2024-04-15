@@ -22,6 +22,7 @@ public class SimulationManager implements Runnable{
     public volatile int minServiceTime;
     public static int numberOfServers;
     public static int numberOfClients;
+    public volatile String strategy;
     private int averageWaitingTime;
     private int averageServiceTime;
     private final Scheduler scheduler;
@@ -30,18 +31,20 @@ public class SimulationManager implements Runnable{
     private Map<Integer, Integer> hourlyArrivals = new HashMap<>();
     private volatile Boolean okData = false;
 
-    public SimulationManager(SimulationFrame frame, SelectionPolicy selectionPolicy){
+    public SimulationManager(SimulationFrame frame){
         this.frame = frame;
         setData(frame);
         List<Task> list = generateRandomTasks();
         this.tasks = new ConcurrentLinkedQueue<>(list);
         computeResultTime();
         this.scheduler = new Scheduler(numberOfServers, 10);
-        scheduler.changeStrategy(selectionPolicy);
+        if(strategy.equals("Strategy QUEUE"))
+            scheduler.changeStrategy(SelectionPolicy.SHORTEST_QUEUE);
+        else
+            scheduler.changeStrategy(SelectionPolicy.SHORTEST_TIME);
     }
 
     private synchronized void setData(SimulationFrame controller){
-
         this.timeLimit = controller.getSimulationInterval();
         this.maxArrivalTime = controller.getMaximumArrivalTime();
         this.minArrivalTime = controller.getMinimumArrivalTime();
@@ -49,6 +52,7 @@ public class SimulationManager implements Runnable{
         this.minServiceTime = controller.getMinimumServiceTime();
         this.numberOfServers = controller.getActiveQueues();
         this.numberOfClients = controller.getNumberOfClients();
+        this.strategy = controller.getStrategy();
     }
 
     private synchronized void verifyData() {
@@ -81,7 +85,7 @@ public class SimulationManager implements Runnable{
                 controller.setLblValidateData("");
             else
                 controller.setLblValidateData("Cannot display the simulation! See logs!");
-            Application.startSimulation(controller, SelectionPolicy.SHORTEST_QUEUE);
+            Application.startSimulation(controller);
         } else { controller.setLblValidateData("Cannot start the simulation until the data is valid!"); }
 
     }
