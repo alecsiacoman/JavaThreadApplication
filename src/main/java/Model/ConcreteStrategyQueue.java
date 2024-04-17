@@ -1,5 +1,7 @@
 package Model;
 
+import com.example.Controller.SimulationManager;
+
 import java.util.List;
 
 public class ConcreteStrategyQueue implements Strategy{
@@ -19,6 +21,7 @@ public class ConcreteStrategyQueue implements Strategy{
             synchronized (server){
                 //add task to the server with the shortest length
                 server.addTask(task);
+                SimulationManager.totalWaitingTime += server.getWaitingPeriod().get();
             }
        }
     }

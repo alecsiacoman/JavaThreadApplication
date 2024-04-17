@@ -30,6 +30,7 @@ public class SimulationManager implements Runnable{
     private volatile ConcurrentLinkedQueue<Task> tasks;
     private Map<Integer, Integer> hourlyArrivals = new HashMap<>();
     private volatile Boolean okData = false;
+    public volatile static int totalWaitingTime = 0;
 
     public SimulationManager(SimulationFrame frame){
         this.frame = frame;
@@ -145,6 +146,7 @@ public class SimulationManager implements Runnable{
     }
 
     private void handleSimulationEnd(int currentTime, FileWriter writer) throws IOException {
+        averageWaitingTime = totalWaitingTime / getNumberOfClients();
         updateServerQueues(frame);
         String entry = generateLog(currentTime);
         writer.write(entry + "\nSIMULATION ENDED!");
@@ -225,12 +227,13 @@ public class SimulationManager implements Runnable{
     }
 
     private void computeResultTime(){
-        int totalWaitingTime = 0, totalServiceTime = 0;
+       // int totalWaitingTime = 0, totalServiceTime = 0;
+        int totalServiceTime = 0;
         for(Task task : tasks){
-            totalWaitingTime += abs(task.getArrivalTime() - task.getServiceTime());
+            //totalWaitingTime += abs(task.getArrivalTime() - task.getServiceTime());
             totalServiceTime += task.getServiceTime();
         }
-        averageWaitingTime = totalWaitingTime / getNumberOfClients();
+
         averageServiceTime = totalServiceTime / getNumberOfClients();
     }
     private String generateResults(){

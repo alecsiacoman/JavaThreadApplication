@@ -50,7 +50,7 @@ public class Server implements Runnable {
         return tasks.toArray(new Task[0]);
     }
 
-    public synchronized AtomicInteger getWaitingPeriod() {
+    public AtomicInteger getWaitingPeriod() {
         return waitingPeriod;
     }
 
