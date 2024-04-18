@@ -38,7 +38,7 @@ public class SimulationManager implements Runnable{
         List<Task> list = generateRandomTasks();
         this.tasks = new ConcurrentLinkedQueue<>(list);
         computeResultTime();
-        this.scheduler = new Scheduler(numberOfServers, 10);
+        this.scheduler = new Scheduler(numberOfServers, 200);
         if(strategy.equals("Strategy QUEUE"))
             scheduler.changeStrategy(SelectionPolicy.SHORTEST_QUEUE);
         else
@@ -58,6 +58,10 @@ public class SimulationManager implements Runnable{
 
     private synchronized void verifyData() {
         if(timeLimit <= 0)
+            okData = false;
+        if(minArrivalTime >= timeLimit || maxArrivalTime >= timeLimit)
+            okData = false;
+        if(minServiceTime >= timeLimit || maxServiceTime >= timeLimit)
             okData = false;
         if(minArrivalTime >= maxArrivalTime || minArrivalTime <= 0 || maxArrivalTime <= 0)
             okData = false;
@@ -121,7 +125,7 @@ public class SimulationManager implements Runnable{
                 System.out.println(entry);
                 currentTime++;
                 Thread.sleep(1000);
-                if(simulationEnded()){
+                if(simulationEnded(currentTime)){
                     handleSimulationEnd(currentTime, writer);
                     break;
                 }
@@ -182,7 +186,10 @@ public class SimulationManager implements Runnable{
         }
     }
 
-    private boolean simulationEnded() {
+    private boolean simulationEnded(int currentTime) {
+        if(currentTime == timeLimit){
+            return true;
+        }
         boolean allServersClosed = true;
         boolean clientsWaiting;
         synchronized (tasks){

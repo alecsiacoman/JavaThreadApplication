@@ -8,7 +8,7 @@ public class ConcreteStrategyTime implements Strategy{
 
     @Override
     public void addTask(List<Server> servers, Task task, int maxTasks) {
-       synchronized (servers){
+      // synchronized (servers){
            Server server = servers.get(0);
            int shortest = server.getWaitingPeriod().get();
 
@@ -24,6 +24,6 @@ public class ConcreteStrategyTime implements Strategy{
                server.addTask(task);
                SimulationManager.totalWaitingTime += server.getWaitingPeriod().get();
            }
-       }
+       //}
     }
 }
